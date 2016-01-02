@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Tour Nepal</string>
+
+    <string-array name="names">
+        <item>Pokhara</item>
+        <item>Chitwan</item>
+        <item>Lumbini</item>
+        <item>Kathmandu</item>
+        <item>Mustang</item>
+    </string-array>
+
+    <string-array name="attraction">
+        <item>Beauty of Nature</item>
+        <item>Jungle Safari</item>
+        <item>Land of Peace</item>
+        <item>City of Temples</item>
+        <item>Kingdom Beyond the Mountains</item>
+    </string-array>
 </resources>
