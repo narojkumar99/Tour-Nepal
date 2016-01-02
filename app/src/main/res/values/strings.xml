@@ -18,10 +18,18 @@
     </string-array>
 
     <string-array name="hotels">
-        <item>Hotel Landmark Pokhara\n\nLakeside, Pokhara, Nepal</item>
-        <item>Hotel Pokhara Grande\n\nPardi, Pokhara</item>
-        <item>Pokhara Village Resort\n\nLakeside Rd</item>
-        <item>Hotel Barahi\n\nBarahai Path, Lakeside</item>
-        <item>Hotel Lotus Inn\n\nBaidam, Pokhara-6, Gaurighat</item>
+        <item>Hotel Landmark Pokhara</item>
+        <item>Hotel Pokhara Grande</item>
+        <item>Pokhara Village Resort</item>
+        <item>Hotel Barahi</item>
+        <item>Hotel Lotus Inn</item>
+    </string-array>
+
+    <string-array name="hotelsAddress">
+        <item>Lakeside, Pokhara, Nepal</item>
+        <item>Pardi, Pokhara</item>
+        <item>Lakeside Rd</item>
+        <item>Barahai Path, Lakeside</item>
+        <item>Baidam, Pokhara-6, Gaurighat</item>
     </string-array>
 </resources>
