@@ -13,8 +13,8 @@ We made this app so that a tourist would not miss any must-visit places during t
 
 ##CONTRIBUTORS
 ###BrainAnts Technology
- *[**Aawaz Gyawali**](https://twitter.com/AawazGyawali) 
- *[**Prasanna Mishra**](https://twitter.com/Prascq56)  
- *[**Rameshwor Dhakal**] (https://twitter.com/RameshworDhakal)
- *[**Roshan Gautam**](https://twitter.com/roshangautam0)
+ [**Aawaz Gyawali**](https://twitter.com/AawazGyawali) 
+ [**Prasanna Mishra**](https://twitter.com/Prascq56)  
+ [**Rameshwor Dhakal**] (https://twitter.com/RameshworDhakal)
+ [**Roshan Gautam**](https://twitter.com/roshangautam0)
 
