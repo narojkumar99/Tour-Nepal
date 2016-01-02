@@ -12,9 +12,9 @@ A must have app for any tourist wanting to visit Nepal and marvel at its beauty.
 We made this app so that a tourist would not miss any must-visit places during their stay in Nepal.
 
 ##CONTRIBUTORS
-###BrainAnts Technology
- [**Aawaz Gyawali**](https://twitter.com/AawazGyawali) 
- [**Prasanna Mishra**](https://twitter.com/Prascq56)  
- [**Rameshwor Dhakal**] (https://twitter.com/RameshworDhakal)
- [**Roshan Gautam**](https://twitter.com/roshangautam0)
+###BrainAnts Technology:
+ -[**Aawaz Gyawali**](https://twitter.com/AawazGyawali) 
+ -[**Prasanna Mishra**](https://twitter.com/Prascq56)  
+ -[**Rameshwor Dhakal**] (https://twitter.com/RameshworDhakal)
+ -[**Roshan Gautam**](https://twitter.com/roshangautam0)
 
