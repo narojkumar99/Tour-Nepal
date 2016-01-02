@@ -16,4 +16,12 @@
         <item>City of Temples</item>
         <item>Kingdom Beyond the Mountains</item>
     </string-array>
+
+    <string-array name="hotels">
+        <item>Hotel Landmark Pokhara\n\nLakeside, Pokhara, Nepal</item>
+        <item>Hotel Pokhara Grande\n\nPardi, Pokhara</item>
+        <item>Pokhara Village Resort\n\nLakeside Rd</item>
+        <item>Hotel Barahi\n\nBarahai Path, Lakeside</item>
+        <item>Hotel Lotus Inn\n\nBaidam, Pokhara-6, Gaurighat</item>
+    </string-array>
 </resources>

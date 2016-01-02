@@ -11,6 +11,7 @@ import com.devspark.robototextview.widget.RobotoTextView;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
 
+    ClickListener clickListener;
     LayoutInflater inflater;
     String[] name,attraction;
     int[] imageLink;
@@ -35,6 +36,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
         holder.image.setImageResource(imageLink[position]);
     }
 
+    public interface ClickListener{
+        void onItemClicked(int position,View view);
+    }
+
+    public void setOnClickListener(ClickListener clickListener){
+        this.clickListener=clickListener;
+    }
+
     @Override
     public int getItemCount() {
         return name.length;
@@ -48,6 +57,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
             nameHolder= (RobotoTextView) itemView.findViewById(R.id.mainTitle);
             attrcationHolder= (RobotoTextView) itemView.findViewById(R.id.mainAttraction);
             image= (ImageView) itemView.findViewById(R.id.mainImage);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onItemClicked(getAdapterPosition(),view);
+                }
+            });
         }
     }
 }
