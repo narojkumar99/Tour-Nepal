@@ -32,4 +32,9 @@
         <item>Barahai Path, Lakeside</item>
         <item>Baidam, Pokhara-6, Gaurighat</item>
     </string-array>
+
+    <string name="title_activity_maps">Map</string>
+
+    <string name="google_maps_key">AIzaSyDzqFIRracJplNFD-o0550skegYf9q1H8w</string>
+    <string name="title_activity_place_viewer">Map</string>
 </resources>

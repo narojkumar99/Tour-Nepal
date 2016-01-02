@@ -1,5 +1,6 @@
 package com.brainants.tournepal.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
@@ -40,9 +41,9 @@ public class EachPlace extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarEach);
         recyclerView = (RecyclerView) findViewById(R.id.eachPlaceAdapter);
-        progressBar= (ProgressBar) findViewById(R.id.progressBarEach);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarEach);
 
-        CollapsingToolbarLayout collapsingToolbarLayout= (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarEach);
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarEach);
         collapsingToolbarLayout.setTitle(getResources().getStringArray(R.array.names)[getIntent().getIntExtra("Position", 0)]);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
@@ -55,8 +56,8 @@ public class EachPlace extends AppCompatActivity {
 
         SliderLayout sliderLayout = (SliderLayout) findViewById(R.id.imageSlider);
 
-        String[] hotels =getResources().getStringArray(R.array.hotels);
-        String[] address =getResources().getStringArray(R.array.hotelsAddress);
+        String[] hotels = getResources().getStringArray(R.array.hotels);
+        String[] address = getResources().getStringArray(R.array.hotelsAddress);
 
         int[] images = new int[]{R.drawable.hotel_one, R.drawable.hotel_two, R.drawable.hotel_three,
                 R.drawable.hotel_four, R.drawable.hotel_five
@@ -65,7 +66,7 @@ public class EachPlace extends AppCompatActivity {
         for (int i = 0; i < 5; i++) {
             CustomTextSlider sliderView = new CustomTextSlider(this);
             sliderView
-                    .description("<b>"+hotels[i]+"</b>"+"<br>"+address[i])
+                    .description("<b>" + hotels[i] + "</b>" + "<br>" + address[i])
                     .image(images[i])
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop);
             sliderLayout.addSlider(sliderView);
@@ -78,9 +79,28 @@ public class EachPlace extends AppCompatActivity {
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, "https://neptour-bloodskate.c9users.io/hello-world.php", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                recyclerView.setAdapter(new EachPlaceAdapter(EachPlace.this, response));
+                EachPlaceAdapter adapter = new EachPlaceAdapter(EachPlace.this, response);
+                recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(EachPlace.this));
                 progressBar.setVisibility(View.GONE);
+                adapter.setOnClickListener(new EachPlaceAdapter.ClickListener() {
+                    @Override
+                    public void setPlaceClickListener(String longitude, String latitude, String title) {
+                        startActivity(new Intent(EachPlace.this, PlaceViewer.class)
+                                .putExtra("lng", longitude)
+                                .putExtra("lat", latitude)
+                                .putExtra("title", title));
+                    }
+
+                    @Override
+                    public void setInformationClickListener(String imageLink, String placeID, String detail) {
+                        startActivity(new Intent(EachPlace.this, PlaceViewer.class)
+                                .putExtra("imageLink", imageLink)
+                                .putExtra("placeId", placeID)
+                                .putExtra("detail", detail));
+                    }
+                });
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -89,7 +109,7 @@ public class EachPlace extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
-        request.setRetryPolicy(new DefaultRetryPolicy(20*1000,2,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Volley.newRequestQueue(this).add(request);
     }
 
@@ -99,4 +119,5 @@ public class EachPlace extends AppCompatActivity {
             finish();
         return true;
     }
+
 }

@@ -1,11 +1,13 @@
 package com.brainants.tournepal.activity;
 
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,16 +24,30 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView= (RecyclerView) findViewById(R.id.recyclerMain);
         final DrawerLayout drawerLayout= (DrawerLayout) findViewById(R.id.drawerMain);
         ImageView drawerOpener= (ImageView) findViewById(R.id.drawerOpener);
+        final NavigationView navigationView= (NavigationView) findViewById(R.id.navigationView);
 
         drawerOpener.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerLayout.openDrawer(findViewById(R.id.navigationView));
+                drawerLayout.openDrawer(navigationView);
             }
         });
         MainAdapter adapter=new MainAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int id=item.getItemId();
+                drawerLayout.closeDrawer(navigationView);
+                if(id==R.id.action_settings)
+                    startActivity(new Intent(MainActivity.this,Settings.class));
+                else if(id==R.id.action_about)
+                    startActivity(new Intent(MainActivity.this,Settings.class));
+                return true;
+            }
+        });
 
         adapter.setOnClickListener(new MainAdapter.ClickListener() {
             @Override
@@ -40,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                        .putExtra("Position",position));
             }
         });
-
     }
+
+
 }
