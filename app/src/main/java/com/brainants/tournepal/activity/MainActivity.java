@@ -16,15 +16,18 @@ import com.brainants.tournepal.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         RecyclerView recyclerView= (RecyclerView) findViewById(R.id.recyclerMain);
-        final DrawerLayout drawerLayout= (DrawerLayout) findViewById(R.id.drawerMain);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerMain);
         ImageView drawerOpener= (ImageView) findViewById(R.id.drawerOpener);
-        final NavigationView navigationView= (NavigationView) findViewById(R.id.navigationView);
+        navigationView = (NavigationView) findViewById(R.id.navigationView);
 
         drawerOpener.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 if(id==R.id.action_settings)
                     startActivity(new Intent(MainActivity.this,Settings.class));
                 else if(id==R.id.action_about)
-                    startActivity(new Intent(MainActivity.this,Settings.class));
-                return true;
+                    startActivity(new Intent(MainActivity.this,AboutUs.class));
+                return false;
             }
         });
 
@@ -58,5 +61,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(navigationView))
+            drawerLayout.closeDrawer(navigationView);
+        else
+            super.onBackPressed();
+    }
 }

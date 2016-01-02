@@ -7,24 +7,24 @@ import android.view.MenuItem;
 
 import com.brainants.tournepal.R;
 
-public class Settings extends AppCompatActivity {
+public class AboutUs extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbarSettings));
+        setContentView(R.layout.activity_about_us);
+        setSupportActionBar((Toolbar) findViewById(R.id.aboutUsToolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setTitle("About Us");
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
             finish();
         return super.onOptionsItemSelected(item);
     }
+
 }

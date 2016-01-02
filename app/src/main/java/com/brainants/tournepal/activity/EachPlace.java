@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -33,6 +34,7 @@ public class EachPlace extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+    private LinearLayout errorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,14 @@ public class EachPlace extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarEach);
         recyclerView = (RecyclerView) findViewById(R.id.eachPlaceAdapter);
         progressBar = (ProgressBar) findViewById(R.id.progressBarEach);
+        errorLayout= (LinearLayout) findViewById(R.id.errorLayout);
+        errorLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                errorLayout.setVisibility(View.GONE);
+                fetchFromInternet();
+            }
+        });
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarEach);
         collapsingToolbarLayout.setTitle(getResources().getStringArray(R.array.names)[getIntent().getIntExtra("Position", 0)]);
@@ -76,6 +86,7 @@ public class EachPlace extends AppCompatActivity {
     }
 
     private void fetchFromInternet() {
+        progressBar.setVisibility(View.VISIBLE);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, "https://neptour-bloodskate.c9users.io/hello-world.php", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -106,7 +117,7 @@ public class EachPlace extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.INVISIBLE);
-                error.printStackTrace();
+                errorLayout.setVisibility(View.VISIBLE);
             }
         });
         request.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

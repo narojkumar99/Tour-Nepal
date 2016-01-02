@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.brainants.tournepal.activity.AboutUs">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/aboutUsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/Theme.AppCompat" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="MVP for HackClash-Nepal 2016"
+            android:textSize="18sp" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="By Team BrainAnts"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/facebookBtn"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            fancy:fb_defaultColor="#3B5998"
+            android:padding="3dp"
+            fancy:fb_focusColor="#5B74A9"
+            fancy:fb_iconResource="@drawable/facebook_icon"/>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/twitterBtn"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            fancy:fb_defaultColor="#55acee"
+            android:padding="3dp"
+            fancy:fb_focusColor="#8055acee"
+            fancy:fb_iconResource="@drawable/twitter_icon" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/webBtn"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:padding="3dp"
+            fancy:fb_defaultColor="#ff5305"
+            fancy:fb_focusColor="#80ff5305"
+            fancy:fb_iconResource="@drawable/web_icon" />
+    </LinearLayout>
+</LinearLayout>
