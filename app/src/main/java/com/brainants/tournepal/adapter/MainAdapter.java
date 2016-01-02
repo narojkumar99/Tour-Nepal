@@ -1,4 +1,4 @@
-package com.brainants.tournepal;
+package com.brainants.tournepal.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.brainants.tournepal.R;
 import com.devspark.robototextview.widget.RobotoTextView;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {

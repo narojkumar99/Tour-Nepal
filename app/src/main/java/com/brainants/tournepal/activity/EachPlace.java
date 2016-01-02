@@ -24,7 +24,7 @@ public class EachPlace extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle(getResources().getStringArray(R.array.names)[getIntent().getIntExtra("Position",0)]);
 
         SliderLayout sliderLayout= (SliderLayout) findViewById(R.id.imageSlider);
 
@@ -43,6 +43,8 @@ public class EachPlace extends AppCompatActivity {
             sliderLayout.addSlider(sliderView);
         }
         sliderLayout.setDuration(2000);
+
+
     }
 
     @Override

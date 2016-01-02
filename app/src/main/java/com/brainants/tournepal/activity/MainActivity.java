@@ -6,11 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.brainants.tournepal.MainAdapter;
+import com.brainants.tournepal.adapter.MainAdapter;
 import com.brainants.tournepal.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnClickListener(new MainAdapter.ClickListener() {
             @Override
             public void onItemClicked(int position, View view) {
-               startActivity(new Intent(MainActivity.this,EachPlace.class));
+               startActivity(new Intent(MainActivity.this,EachPlace.class)
+                       .putExtra("Position",position));
             }
         });
 
