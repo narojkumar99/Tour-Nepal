@@ -76,7 +76,7 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
     public interface ClickListener {
         void setPlaceClickListener(String longitude, String latitude, String title);
 
-        void setInformationClickListener(String imageLink, String placeID, String detail);
+        void setInformationClickListener(String imageLink, String placeID, String name, String detail);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
         holder.titleHolder.setText(titles.get(position));
         if (getItemViewType(position) != eachPlace)
             return;
-        holder.visitorsHolder.setText(visitor + " visitors");
+        holder.visitorsHolder.setText(visitor.get(position) + " visitors");
         holder.placeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +98,7 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
             public void onClick(View view) {
                 clickListener.setInformationClickListener(imageLink.get(position),
                         placeId.get(position),
+                        titles.get(position),
                         detail.get(position));
             }
         });

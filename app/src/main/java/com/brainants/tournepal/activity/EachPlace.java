@@ -112,10 +112,11 @@ public class EachPlace extends AppCompatActivity {
                     }
 
                     @Override
-                    public void setInformationClickListener(String imageLink, String placeID, String detail) {
-                        startActivity(new Intent(EachPlace.this, PlaceViewer.class)
+                    public void setInformationClickListener(String imageLink, String placeID, String name, String detail) {
+                        startActivity(new Intent(EachPlace.this, PlaceDetail.class)
                                 .putExtra("imageLink", imageLink)
                                 .putExtra("placeId", placeID)
+                                .putExtra("name", name)
                                 .putExtra("detail", detail));
                     }
                 });
