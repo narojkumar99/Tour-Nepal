@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int position, View view) {
                startActivity(new Intent(MainActivity.this,EachPlace.class)
-                       .putExtra("Position",position));
+                       .putExtra("Name", getResources().getStringArray(R.array.names)[position]));
             }
         });
     }

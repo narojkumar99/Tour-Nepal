@@ -52,12 +52,14 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
                     placeId.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("place_id"));
                     longitude.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("longitude"));
                     latitude.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("latitude"));
-                    detail.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("detail"));
+                    detail.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("description"));
                     visitor.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("visitors"));
                     viewType.add(eachPlace);
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
 
     @Override
@@ -72,16 +74,33 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
     }
 
     public interface ClickListener {
-        void setPlaceClickListener(String longitude, String latitude,String title);
+        void setPlaceClickListener(String longitude, String latitude, String title);
 
         void setInformationClickListener(String imageLink, String placeID, String detail);
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public void onBindViewHolder(VH holder, final int position) {
         holder.titleHolder.setText(titles.get(position));
-        if (getItemViewType(position)==eachPlace)
-            holder.visitorsHolder.setText(visitor+" visitors");
+        if (getItemViewType(position) != eachPlace)
+            return;
+        holder.visitorsHolder.setText(visitor + " visitors");
+        holder.placeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.setPlaceClickListener(longitude.get(position),
+                        latitude.get(position),
+                        titles.get(position));
+            }
+        });
+        holder.informationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.setInformationClickListener(imageLink.get(position),
+                        placeId.get(position),
+                        detail.get(position));
+            }
+        });
     }
 
     public void setOnClickListener(ClickListener clickListener) {
@@ -108,22 +127,6 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
             visitorsHolder = (RobotoTextView) itemView.findViewById(R.id.visitors);
             placeIcon = (ImageView) itemView.findViewById(R.id.placeIcon);
             informationIcon = (ImageView) itemView.findViewById(R.id.informationIcons);
-            placeIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clickListener.setPlaceClickListener(longitude.get(getAdapterPosition()),
-                            latitude.get(getAdapterPosition()),
-                            titles.get(getAdapterPosition()));
-                }
-            });
-            informationIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clickListener.setInformationClickListener(imageLink.get(getAdapterPosition()),
-                            placeId.get(getAdapterPosition()),
-                            detail.get(getAdapterPosition()));
-                }
-            });
         }
     }
 }

@@ -2,33 +2,36 @@ package com.brainants.tournepal.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.brainants.tournepal.CustomTextSlider;
 import com.brainants.tournepal.R;
 import com.brainants.tournepal.adapter.EachPlaceAdapter;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EachPlace extends AppCompatActivity {
 
@@ -54,7 +57,7 @@ public class EachPlace extends AppCompatActivity {
         });
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarEach);
-        collapsingToolbarLayout.setTitle(getResources().getStringArray(R.array.names)[getIntent().getIntExtra("Position", 0)]);
+        collapsingToolbarLayout.setTitle(getIntent().getStringExtra("Name"));
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
 
@@ -87,10 +90,15 @@ public class EachPlace extends AppCompatActivity {
 
     private void fetchFromInternet() {
         progressBar.setVisibility(View.VISIBLE);
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, "https://neptour-bloodskate.c9users.io/hello-world.php", new Response.Listener<JSONArray>() {
+        final StringRequest request = new StringRequest(Request.Method.POST, "https://neptour-bloodskate.c9users.io/tournepal/data", new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                EachPlaceAdapter adapter = new EachPlaceAdapter(EachPlace.this, response);
+            public void onResponse(String response) {
+                Log.d("Debug",response);
+                JSONArray array= null;
+                try {
+                    array = new JSONArray(response);
+                } catch (JSONException ignored) {}
+                EachPlaceAdapter adapter = new EachPlaceAdapter(EachPlace.this,array);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(EachPlace.this));
                 progressBar.setVisibility(View.GONE);
@@ -118,8 +126,24 @@ public class EachPlace extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.INVISIBLE);
                 errorLayout.setVisibility(View.VISIBLE);
+                error.printStackTrace();
             }
-        });
+        }){
+            @Override
+            protected HashMap<String,String> getParams(){
+                HashMap<String,String> params = new HashMap<String, String>();
+                params.put("place",getIntent().getStringExtra("Name"));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
         request.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Volley.newRequestQueue(this).add(request);
     }
