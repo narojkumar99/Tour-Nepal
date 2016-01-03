@@ -23,9 +23,10 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
             placeId = new ArrayList<>();
 
     ArrayList<String> visitor = new ArrayList<>(),
-            longitude = new ArrayList<>(),
-            latitude = new ArrayList<>(),
             detail = new ArrayList<>();
+
+    ArrayList<Double> longitude = new ArrayList<>(),
+            latitude = new ArrayList<>();
     ClickListener clickListener;
 
     static int headerTitle = 0;
@@ -41,8 +42,8 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
                 titles.add(array.getJSONObject(i).getString("name"));
                 imageLink.add("");
                 placeId.add("");
-                longitude.add("");
-                latitude.add("");
+                longitude.add(0.0);
+                latitude.add(0.0);
                 detail.add("");
                 visitor.add("");
                 viewType.add(headerTitle);
@@ -50,10 +51,10 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
                     titles.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("name"));
                     imageLink.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("image_link"));
                     placeId.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("place_id"));
-                    longitude.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("longitude"));
-                    latitude.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("latitude"));
+                    longitude.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getDouble("longitude"));
+                    latitude.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getDouble("latitude"));
                     detail.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("description"));
-                    visitor.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("visitors"));
+                    visitor.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getInt("visitors") + "");
                     viewType.add(eachPlace);
                 }
             }
@@ -74,7 +75,7 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
     }
 
     public interface ClickListener {
-        void setPlaceClickListener(String longitude, String latitude, String title);
+        void setPlaceClickListener(double longitude, double latitude, String title);
 
         void setInformationClickListener(String imageLink, String placeID, String name, String detail);
     }
@@ -94,6 +95,24 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
             }
         });
         holder.informationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.setInformationClickListener(imageLink.get(position),
+                        placeId.get(position),
+                        titles.get(position),
+                        detail.get(position));
+            }
+        });
+        holder.titleHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.setInformationClickListener(imageLink.get(position),
+                        placeId.get(position),
+                        titles.get(position),
+                        detail.get(position));
+            }
+        });
+        holder.visitorsHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clickListener.setInformationClickListener(imageLink.get(position),

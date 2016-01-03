@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         app:contentScrim="@color/colorPrimary"
+        android:theme="@style/Theme.AppCompat"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -19,8 +20,6 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -32,7 +31,8 @@
 
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/toolbarPlaceDetail"
+                android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -77,5 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:layout_anchor="@+id/appBarDetail"
+        app:backgroundTint="@color/white"
+        android:id="@+id/fabVisited"
+        android:src="@drawable/checked_grey"
         app:layout_anchorGravity="bottom|right|end" />
 </android.support.design.widget.CoordinatorLayout>

@@ -93,7 +93,6 @@ public class EachPlace extends AppCompatActivity {
         final StringRequest request = new StringRequest(Request.Method.POST, "https://neptour-bloodskate.c9users.io/tournepal/data", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Debug",response);
                 JSONArray array= null;
                 try {
                     array = new JSONArray(response);
@@ -104,7 +103,7 @@ public class EachPlace extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 adapter.setOnClickListener(new EachPlaceAdapter.ClickListener() {
                     @Override
-                    public void setPlaceClickListener(String longitude, String latitude, String title) {
+                    public void setPlaceClickListener(double longitude, double latitude, String title) {
                         startActivity(new Intent(EachPlace.this, PlaceViewer.class)
                                 .putExtra("lng", longitude)
                                 .putExtra("lat", latitude)
