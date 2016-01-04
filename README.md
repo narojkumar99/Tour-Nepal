@@ -2,7 +2,7 @@
 
 A must have app for any tourist wanting to visit Nepal and marvel at its beauty. 
 
- 
+ **NOTE:** The app is currently mostly online ,offline feature will be implemented in the near future.
 
 ##FEATURES
 ######**[x]Tourist Attractions** -
