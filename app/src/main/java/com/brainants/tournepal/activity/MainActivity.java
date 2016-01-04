@@ -1,18 +1,18 @@
 package com.brainants.tournepal.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.brainants.tournepal.adapter.MainAdapter;
 import com.brainants.tournepal.R;
+import com.brainants.tournepal.adapter.MainAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
                        .putExtra("Name", getResources().getStringArray(R.array.names)[position]));
             }
         });
+        checkFirst();
+    }
+
+    private void checkFirst() {
+        if(getSharedPreferences("info",MODE_PRIVATE).getBoolean("first",true)) {
+            drawerLayout.openDrawer(navigationView);
+            getSharedPreferences("info",MODE_PRIVATE).edit().putBoolean("first",false).apply();
+        }
     }
 
     @Override

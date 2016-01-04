@@ -45,8 +45,8 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 app:layout_collapseMode="pin"
-                fancy:fb_defaultColor="#ffc107"
-                fancy:fb_focusColor="#ffc107"
+                fancy:fb_defaultColor="#ff5722"
+                fancy:fb_focusColor="#ff5722"
                 fancy:fb_text="ads"/>
         </android.support.design.widget.CollapsingToolbarLayout>
 

@@ -9,4 +9,11 @@
     </style>
 
     <style name="AppTheme.Toolbar" parent="Theme.AppCompat" />
+
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 </resources>

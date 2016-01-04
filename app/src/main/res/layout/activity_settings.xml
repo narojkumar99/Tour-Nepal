@@ -11,4 +11,9 @@
         android:theme="@style/Theme.AppCompat"
         android:background="@color/colorPrimary"
         android:layout_height="wrap_content"/>
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="This screen will contain basic settings like selecting country, users interest and facebook integration."/>
 </LinearLayout>
