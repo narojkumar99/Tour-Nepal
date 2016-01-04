@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.brainants.tournepal.R;
@@ -58,7 +59,6 @@ public class PlaceDetail extends AppCompatActivity {
                     visited.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#e91e63")));
                     visited.setImageResource(R.drawable.checked_white);
                     Snackbar.make(findViewById(R.id.coreEachPlace),"Marked as visited.",Snackbar.LENGTH_SHORT).show();
-                    getSharedPreferences("visited",MODE_PRIVATE).edit().putBoolean(getIntent().getStringExtra("placeId"),true).apply();
                     requestToAdd(getIntent().getStringExtra("placeId"));
                 }
             }
@@ -71,7 +71,13 @@ public class PlaceDetail extends AppCompatActivity {
     }
 
     private void requestToAdd(final String placeId) {
-        StringRequest request=new StringRequest(Request.Method.POST,"https://neptour-bloodskate.c9users.io/tournepal/addvisitor",null,null)
+        StringRequest request=new StringRequest(Request.Method.POST, "https://neptour-bloodskate.c9users.io/tournepal/addvisitor",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        getSharedPreferences("visited",MODE_PRIVATE).edit().putBoolean(getIntent().getStringExtra("placeId"),true).apply();
+                    }
+                }, null)
         {
 
             @Override

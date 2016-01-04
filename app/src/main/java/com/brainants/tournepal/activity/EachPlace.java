@@ -18,6 +18,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.brainants.tournepal.CustomTextSlider;
@@ -46,7 +47,7 @@ public class EachPlace extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarEach);
         recyclerView = (RecyclerView) findViewById(R.id.eachPlaceAdapter);
         progressBar = (ProgressBar) findViewById(R.id.progressBarEach);
-        errorLayout= (LinearLayout) findViewById(R.id.errorLayout);
+        errorLayout = (LinearLayout) findViewById(R.id.errorLayout);
         errorLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,24 +67,7 @@ public class EachPlace extends AppCompatActivity {
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
 
-        SliderLayout sliderLayout = (SliderLayout) findViewById(R.id.imageSlider);
-
-        String[] hotels = getResources().getStringArray(R.array.hotels);
-        String[] address = getResources().getStringArray(R.array.hotelsAddress);
-
-        int[] images = new int[]{R.drawable.hotel_one, R.drawable.hotel_two, R.drawable.hotel_three,
-                R.drawable.hotel_four, R.drawable.hotel_five
-        };
-
-        for (int i = 0; i < 5; i++) {
-            CustomTextSlider sliderView = new CustomTextSlider(this);
-            sliderView
-                    .description("<b>" + hotels[i] + "</b>" + "<br>" + address[i])
-                    .image(images[i])
-                    .setScaleType(BaseSliderView.ScaleType.CenterCrop);
-            sliderLayout.addSlider(sliderView);
-        }
-        sliderLayout.setDuration(3000);
+        setSlider();
         fetchFromInternet();
     }
 
@@ -92,17 +76,18 @@ public class EachPlace extends AppCompatActivity {
         final StringRequest request = new StringRequest(Request.Method.POST, "https://neptour-bloodskate.c9users.io/tournepal/data", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                JSONArray array= null;
+                JSONArray array = null;
                 try {
                     array = new JSONArray(response);
-                } catch (JSONException ignored) {}
-                EachPlaceAdapter adapter = new EachPlaceAdapter(EachPlace.this,array);
+                } catch (JSONException ignored) {
+                }
+                EachPlaceAdapter adapter = new EachPlaceAdapter(EachPlace.this, array);
                 recyclerView.setAdapter(adapter);
-                GridLayoutManager layoutManager= new GridLayoutManager(EachPlace.this,3);
+                GridLayoutManager layoutManager = new GridLayoutManager(EachPlace.this, 3);
                 layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        if(position>0 && position<4)
+                        if (position > 0 && position < 4)
                             return 1;
                         else
                             return 3;
@@ -138,18 +123,61 @@ public class EachPlace extends AppCompatActivity {
                 errorLayout.setVisibility(View.VISIBLE);
                 error.printStackTrace();
             }
-        }){
+        }) {
             @Override
-            protected HashMap<String,String> getParams(){
-                HashMap<String,String> params = new HashMap<String, String>();
-                params.put("place",getIntent().getStringExtra("Name"));
+            protected HashMap<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("place", getIntent().getStringExtra("Name"));
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/x-www-form-urlencoded");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        Volley.newRequestQueue(this).add(request);
+    }
+
+    private void setSlider() {
+
+        final SliderLayout sliderLayout = (SliderLayout) findViewById(R.id.imageSlider);
+
+        final JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,
+                "https://neptour-bloodskate.c9users.io/tournepal/ads",
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                CustomTextSlider sliderView = new CustomTextSlider(EachPlace.this);
+                                sliderView
+                                        .description("<b>" + response.getJSONObject(i).getString("name") + "</b>" + "<br>" + response.getJSONObject(i).getString("address"))
+                                        .image(response.getJSONObject(i).getString("image_link"))
+                                        .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+                                sliderLayout.addSlider(sliderView);
+                            }
+                            sliderLayout.setDuration(3000);
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, null) {
+            @Override
+            protected HashMap<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("place", getIntent().getStringExtra("Name"));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
         };
