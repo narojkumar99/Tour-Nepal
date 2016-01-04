@@ -3,6 +3,7 @@ package com.brainants.tournepal.activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,26 +58,27 @@ public class PlaceDetail extends AppCompatActivity {
                 if(!visit){
                     visited.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#e91e63")));
                     visited.setImageResource(R.drawable.checked_white);
+                    Snackbar.make(findViewById(R.id.coreEachPlace),"Marked as visited.",Snackbar.LENGTH_SHORT).show();
                     getSharedPreferences("visited",MODE_PRIVATE).edit().putBoolean(getIntent().getStringExtra("placeId"),true).apply();
                     requestToAdd(getIntent().getStringExtra("placeId"));
                 }
             }
         });
 
-        name.setText(getIntent().getStringExtra("name"));
+        name.setText(getIntent().getStringExtra("place")+" - "+getIntent().getStringExtra("name"));
         detail.setText(getIntent().getStringExtra("detail"));
 
         Picasso.with(this).load(getIntent().getStringExtra("imageLink")).into(imageView);
     }
 
-    private void requestToAdd(String placeId) {
+    private void requestToAdd(final String placeId) {
         StringRequest request=new StringRequest(Request.Method.POST,"https://neptour-bloodskate.c9users.io/tournepal/addvisitor",null,null)
         {
 
             @Override
             protected HashMap<String,String> getParams(){
                 HashMap<String,String> params = new HashMap<String, String>();
-                params.put("place_id",getIntent().getStringExtra("placeId"));
+                params.put("place_id",placeId);
                 return params;
             }
 

@@ -34,8 +34,8 @@ public class PlaceViewer extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap map) {
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(getIntent().getDoubleExtra("lat",0.0),
-                getIntent().getDoubleExtra("lng",0.0));
+        LatLng sydney = new LatLng(getIntent().getDoubleExtra("lng",0.0),
+                getIntent().getDoubleExtra("lat",0.0));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
 
         map.addMarker(new MarkerOptions()

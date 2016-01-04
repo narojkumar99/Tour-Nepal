@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     tools:context="com.brainants.tournepal.activity.EachPlace">
 
 
@@ -24,7 +25,8 @@
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp"
+                app:layout_collapseMode="pin"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbarEach"
@@ -32,6 +34,20 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
 
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="3dp"
+                fancy:fb_radius="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:layout_collapseMode="pin"
+                fancy:fb_defaultColor="#ffc107"
+                fancy:fb_focusColor="#ffc107"
+                fancy:fb_text="ads"/>
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>

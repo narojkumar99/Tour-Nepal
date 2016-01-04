@@ -116,6 +116,7 @@ public class EachPlace extends AppCompatActivity {
                                 .putExtra("imageLink", imageLink)
                                 .putExtra("placeId", placeID)
                                 .putExtra("name", name)
+                                .putExtra("place", getIntent().getStringExtra("Name"))
                                 .putExtra("detail", detail));
                     }
                 });
