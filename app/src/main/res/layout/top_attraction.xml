@@ -30,8 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:padding="10dp"
-                android:src="@drawable/place_point" />
+                android:padding="5dp"
+                android:src="@drawable/place_point_blue" />
         </FrameLayout>
 
         <com.devspark.robototextview.widget.RobotoTextView

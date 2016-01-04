@@ -20,23 +20,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activity.EachPlace" />
-
         <activity android:name=".activity.PlaceDetail" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".activity.PlaceViewer" />
-
+        <activity android:name=".activity.PlaceViewer" />
         <activity android:name=".activity.Settings" />
-
         <activity
             android:name=".activity.AboutUs"
             android:label="About Us" />
+        <activity android:name=".activity.SplashScreen"></activity>
     </application>
 
 </manifest>
