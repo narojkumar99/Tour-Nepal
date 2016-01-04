@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,7 +18,6 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.brainants.tournepal.CustomTextSlider;
@@ -39,6 +37,7 @@ public class EachPlace extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private LinearLayout errorLayout;
+    ProgressBar adBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +53,11 @@ public class EachPlace extends AppCompatActivity {
             public void onClick(View view) {
                 errorLayout.setVisibility(View.GONE);
                 fetchFromInternet();
+                setSlider();
             }
         });
+        adBar = (ProgressBar) findViewById(R.id.adLoader);
+
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarEach);
         collapsingToolbarLayout.setTitle(getIntent().getStringExtra("Name"));
@@ -121,20 +123,21 @@ public class EachPlace extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.INVISIBLE);
+                adBar.setVisibility(View.GONE);
                 errorLayout.setVisibility(View.VISIBLE);
                 error.printStackTrace();
             }
         }) {
             @Override
             protected HashMap<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<String, String>();
+                HashMap<String, String> params = new HashMap<>();
                 params.put("place", getIntent().getStringExtra("Name"));
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
@@ -145,19 +148,14 @@ public class EachPlace extends AppCompatActivity {
     }
 
     private void setSlider() {
-
         final SliderLayout sliderLayout = (SliderLayout) findViewById(R.id.imageSlider);
-        final ProgressBar adBar= (ProgressBar) findViewById(R.id.adLoader);
-
         final StringRequest request = new StringRequest(Request.Method.POST,
                 "https://neptour-bloodskate.c9users.io/tournepal/ads",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String resp) {
-                        Log.d("Debug", resp);
-                        JSONArray response = null;
                         try {
-                            response = new JSONArray(resp);
+                            JSONArray response = new JSONArray(resp);
                             for (int i = 0; i < response.length(); i++) {
                                 CustomTextSlider sliderView = new CustomTextSlider(EachPlace.this);
                                 sliderView
@@ -168,21 +166,19 @@ public class EachPlace extends AppCompatActivity {
                             }
                             adBar.setVisibility(View.GONE);
                             sliderLayout.setDuration(3000);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        } catch (JSONException ignored) {}
                     }
-                },null) {
+                }, null) {
             @Override
             protected HashMap<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<String, String>();
+                HashMap<String, String> params = new HashMap<>();
                 params.put("place", getIntent().getStringExtra("Name"));
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
@@ -197,5 +193,4 @@ public class EachPlace extends AppCompatActivity {
             finish();
         return true;
     }
-
 }
