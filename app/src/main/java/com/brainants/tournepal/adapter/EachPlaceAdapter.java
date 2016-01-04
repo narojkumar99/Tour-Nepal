@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.brainants.tournepal.R;
 import com.devspark.robototextview.widget.RobotoTextView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 
@@ -31,11 +32,13 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
 
     static int headerTitle = 0;
     static int eachPlace = 1;
+    static int topAttraction = 2;
 
     LayoutInflater inflater;
-
+    Context context;
 
     public EachPlaceAdapter(Context context, JSONArray array) {
+        this.context = context;
         inflater = LayoutInflater.from(context);
         try {
             for (int i = 0; i < array.length(); i++) {
@@ -55,7 +58,10 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
                     latitude.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getDouble("latitude"));
                     detail.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getString("description"));
                     visitor.add(array.getJSONObject(i).getJSONArray("places").getJSONObject(j).getInt("visitors") + "");
-                    viewType.add(eachPlace);
+                    if (i == 0)
+                        viewType.add(topAttraction);
+                    else
+                        viewType.add(eachPlace);
                 }
             }
         } catch (Exception ignored) {
@@ -70,7 +76,7 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
         else if (viewType == eachPlace)
             return new VH(inflater.inflate(R.layout.each_place, parent, false));
         else
-            return null;
+            return new VH(inflater.inflate(R.layout.top_attraction, parent, false));
 
     }
 
@@ -83,7 +89,7 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
     @Override
     public void onBindViewHolder(VH holder, final int position) {
         holder.titleHolder.setText(titles.get(position));
-        if (getItemViewType(position) != eachPlace)
+        if (getItemViewType(position) == headerTitle)
             return;
         holder.visitorsHolder.setText(visitor.get(position) + " visitors");
         holder.placeIcon.setOnClickListener(new View.OnClickListener() {
@@ -92,15 +98,6 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
                 clickListener.setPlaceClickListener(longitude.get(position),
                         latitude.get(position),
                         titles.get(position));
-            }
-        });
-        holder.informationIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.setInformationClickListener(imageLink.get(position),
-                        placeId.get(position),
-                        titles.get(position),
-                        detail.get(position));
             }
         });
         holder.titleHolder.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +110,18 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
             }
         });
         holder.visitorsHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.setInformationClickListener(imageLink.get(position),
+                        placeId.get(position),
+                        titles.get(position),
+                        detail.get(position));
+            }
+        });
+        if (viewType.get(position) != topAttraction)
+            return;
+        Picasso.with(context).load(imageLink.get(position)).into(holder.imageHolder);
+        holder.imageHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clickListener.setInformationClickListener(imageLink.get(position),
@@ -139,14 +148,14 @@ public class EachPlaceAdapter extends RecyclerView.Adapter<EachPlaceAdapter.VH> 
 
     public class VH extends RecyclerView.ViewHolder {
         RobotoTextView titleHolder, visitorsHolder;
-        ImageView placeIcon, informationIcon;
+        ImageView placeIcon, imageHolder;
 
         public VH(View itemView) {
             super(itemView);
             titleHolder = (RobotoTextView) itemView.findViewById(R.id.names);
             visitorsHolder = (RobotoTextView) itemView.findViewById(R.id.visitors);
             placeIcon = (ImageView) itemView.findViewById(R.id.placeIcon);
-            informationIcon = (ImageView) itemView.findViewById(R.id.informationIcons);
+            imageHolder = (ImageView) itemView.findViewById(R.id.topImage);
         }
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -99,7 +100,17 @@ public class EachPlace extends AppCompatActivity {
                 } catch (JSONException ignored) {}
                 EachPlaceAdapter adapter = new EachPlaceAdapter(EachPlace.this,array);
                 recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(EachPlace.this));
+                GridLayoutManager layoutManager= new GridLayoutManager(EachPlace.this,3);
+                layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        if(position>0 && position<4)
+                            return 1;
+                        else
+                            return 3;
+                    }
+                });
+                recyclerView.setLayoutManager(layoutManager);
                 progressBar.setVisibility(View.GONE);
                 adapter.setOnClickListener(new EachPlaceAdapter.ClickListener() {
                     @Override
