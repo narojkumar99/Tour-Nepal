@@ -9,19 +9,22 @@ A must have app for any tourist wanting to visit Nepal and marvel at its beauty.
 ######**[x]Ease of Travel**
 ######**[]Security Assurance of tourists** - 
 ######**[]Contectual Advertisements**
-######**[]
+######**[x]Mark the places you visited**
 
 ##MVP Details
-For MVP sample, Dashboard contains 5 tourist destinations and two of them Pokhara and Chitwan have some details.
-In the next page, we have some descriptions of the tourist destination which includes Top attractions and other attractions of the place.
 
-Top attractions includes the three top visited places on the basis of visitors.
-Other attractions includes all the other places.
+*_* For MVP sample, Dashboard contains 5 tourist destinations and two of them Pokhara and Chitwan have some details.
+*_* In the next page, we have some descriptions of the tourist destination which includes Top attractions and other attractions     of the place.
 
-From this page, more details and map of the attractions can be viewed. 
-More details will contain basic information, photos, what to do there, where to stay around there, tickets fee, etc. 
+*_* Top attractions includes the three top visited places on the basis of visitors.
+*_* Other attractions includes all the other places.
 
-We will have contectual advertisements of the hotels, homestay,etc. i.e if you are on the page Pokhara, hotels around pokhara will be displayed. And if the tourist is around Fewa Lake in Pokhara, hotel information around Fewa lake will be displayed. (More precise) :D
+*_* From this page, more details and map of the attractions can be viewed. 
+    More details will contain basic information, photos, what to do there, where to stay around there, tickets fee, etc. 
+
+*_* We will have contectual advertisements of the hotels, homestay,etc. i.e if you are on the page Pokhara, hotels around          pokhara will be displayed. And if the tourist is around Fewa Lake in Pokhara, hotel information around Fewa lake will be       displayed. (More precise) :D
+
+*_* You can mark the places you visited so that other people will not miss the top places to visit
 
 
 ##MOTIVATION 
