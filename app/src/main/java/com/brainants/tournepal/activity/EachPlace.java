@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -146,13 +147,17 @@ public class EachPlace extends AppCompatActivity {
     private void setSlider() {
 
         final SliderLayout sliderLayout = (SliderLayout) findViewById(R.id.imageSlider);
+        final ProgressBar adBar= (ProgressBar) findViewById(R.id.adLoader);
 
-        final JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,
+        final StringRequest request = new StringRequest(Request.Method.POST,
                 "https://neptour-bloodskate.c9users.io/tournepal/ads",
-                new Response.Listener<JSONArray>() {
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(String resp) {
+                        Log.d("Debug", resp);
+                        JSONArray response = null;
                         try {
+                            response = new JSONArray(resp);
                             for (int i = 0; i < response.length(); i++) {
                                 CustomTextSlider sliderView = new CustomTextSlider(EachPlace.this);
                                 sliderView
@@ -161,12 +166,13 @@ public class EachPlace extends AppCompatActivity {
                                         .setScaleType(BaseSliderView.ScaleType.CenterCrop);
                                 sliderLayout.addSlider(sliderView);
                             }
+                            adBar.setVisibility(View.GONE);
                             sliderLayout.setDuration(3000);
-                        }catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                }, null) {
+                },null) {
             @Override
             protected HashMap<String, String> getParams() {
                 HashMap<String, String> params = new HashMap<String, String>();
@@ -181,7 +187,6 @@ public class EachPlace extends AppCompatActivity {
                 return params;
             }
         };
-
         request.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Volley.newRequestQueue(this).add(request);
     }
