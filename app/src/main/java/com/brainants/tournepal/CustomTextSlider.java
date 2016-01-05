@@ -19,6 +19,7 @@ public class CustomTextSlider extends BaseSliderView{
     public View getView() {
         View v = LayoutInflater.from(getContext()).inflate(com.daimajia.slider.library.R.layout.render_type_text,null);
         ImageView target = (ImageView)v.findViewById(com.daimajia.slider.library.R.id.daimajia_slider_image);
+        target.setScaleType(ImageView.ScaleType.CENTER_CROP);
         TextView description = (TextView)v.findViewById(com.daimajia.slider.library.R.id.description);
         description.setText(Html.fromHtml(getDescription()));
         bindEventAndShow(v, target);
