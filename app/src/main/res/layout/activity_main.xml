@@ -50,6 +50,7 @@
             android:layout_gravity="end|top"
             android:id="@+id/drawerOpener"
             android:padding="10dp"
+
             android:src="@drawable/dashboard" />
     </android.support.design.widget.CoordinatorLayout>
 
