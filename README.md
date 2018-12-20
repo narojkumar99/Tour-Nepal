@@ -14,7 +14,7 @@ A must have app for any tourist wanting to visit Nepal and marvel at its beauty.
 ##MVP Details
 
 ** For MVP sample, Dashboard contains 5 tourist destinations and two of them Pokhara and Chitwan have some details.
-** In the next page, we have some descriptions of the tourist destination which includes Top attractions and other attractions     of the place.
+** In the next page, we have some description of the tourist destination which includes Top attractions and other attractions     of the place.
 
 ** Top attractions includes the three top visited places on the basis of visitors.
 ** Other attractions includes all the other places.
